@@ -1,0 +1,817 @@
+/* ==========================================================================
+   ESTILOS INFANTILES Y AMIGABLES - SINGLE SCREEN (SIN SCROLL) & 100% RESPONSIVE
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@600;700;800;900&display=swap');
+
+:root {
+  --font-display: 'Fredoka', 'Nunito', system-ui, -apple-system, sans-serif;
+  --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
+  
+  --bg-gradient: linear-gradient(135deg, #FEF9C3 0%, #E0F2FE 50%, #FCE7F3 100%);
+  --card-bg: #FFFFFF;
+  --primary-color: #0284C7;
+  --accent-yellow: #FBBF24;
+  --accent-pink: #F43F5E;
+  --accent-green: #10B981;
+  --accent-purple: #8B5CF6;
+  
+  --shadow-cartoon: 0 4px 0px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* OBLIGATORIO: PANTALLA ÚNICA SIN SCROLL EXTERNO */
+html, body {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden; /* Elimina el scroll de la página completa */
+  font-family: var(--font-body);
+  background: var(--bg-gradient);
+  color: #1E293B;
+  position: relative;
+}
+
+/* Patrón de fondo sutil */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(#38BDF8 1.5px, transparent 1.5px), radial-gradient(#F43F5E 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#app-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  max-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(6px, 1.2vh, 14px) clamp(8px, 1.5vw, 18px);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.view-container {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0; /* Clave flexbox para que los hijos respeten 100% de alto sin desbordar */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* ==========================================================================
+   CABECERA COMPACTA DE LA PÁGINA PRINCIPAL
+   ========================================================================== */
+.main-header-compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: clamp(4px, 0.8vh, 8px) clamp(8px, 1.2vw, 16px);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border: 3px solid #0F172A;
+  border-radius: clamp(14px, 1.8vh, 20px);
+  box-shadow: var(--shadow-cartoon);
+  margin-bottom: clamp(6px, 1vh, 12px);
+  flex-shrink: 0;
+}
+
+.header-title-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-badge-icon {
+  font-size: clamp(1.2rem, 2.2vh, 1.8rem);
+  line-height: 1;
+}
+
+.main-title-compact {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2.2vh, 1.55rem);
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.main-title-compact .highlight {
+  color: #0284C7;
+}
+
+.header-sub-hint {
+  font-size: clamp(0.72rem, 1.3vh, 0.92rem);
+  font-weight: 700;
+  color: #64748B;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .header-sub-hint {
+    display: inline-block;
+  }
+}
+
+.header-actions-compact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-pill-compact {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.75rem, 1.4vh, 0.92rem);
+  padding: clamp(4px, 0.8vh, 8px) clamp(10px, 1.2vw, 16px);
+  border-radius: 999px;
+  border: 2.5px solid #1E293B;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.btn-pill-compact:hover {
+  transform: translateY(-2px);
+}
+
+.btn-pill-compact:active {
+  transform: translateY(2px);
+}
+
+.btn-vampire-pill {
+  background: #4F46E5;
+  color: #FFFFFF;
+  border-color: #312E81;
+  box-shadow: 0 3px 0 #312E81;
+}
+
+.btn-sound-pill {
+  background: #F1F5F9;
+  color: #1E293B;
+  border-color: #64748B;
+  box-shadow: 0 3px 0 #475569;
+}
+
+/* ==========================================================================
+   GRILLA PRINCIPAL (HOME) - 10 ARTEFACTOS EN UNA SOLA PANTALLA
+   Requisito: SOLO IMAGEN DE REFERENCIA CON EL NOMBRE
+   ========================================================================== */
+.appliances-grid-screen {
+  flex: 1;
+  min-height: 0; /* Indispensable para que no desborde la pantalla */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: clamp(6px, 1vh, 12px);
+  width: 100%;
+  height: 100%;
+}
+
+/* TARJETA COMPACTA DE ARTEFACTO (SOLO IMAGEN CON NOMBRE) */
+.appliance-card-screen {
+  background: #FFFFFF;
+  border: clamp(2.5px, 0.35vw, 3.5px) solid #0F172A;
+  border-radius: clamp(14px, 1.8vh, 22px);
+  box-shadow: var(--shadow-cartoon);
+  padding: clamp(6px, 1vh, 12px) clamp(6px, 0.8vw, 10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease;
+  user-select: none;
+  height: 100%;
+  min-height: 0;
+}
+
+.appliance-card-screen:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 0px rgba(0, 0, 0, 0.12), 0 12px 20px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.appliance-card-screen:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+/* Insignia con el número en la esquina */
+.card-mini-badge {
+  position: absolute;
+  top: clamp(4px, 0.8vh, 8px);
+  left: clamp(4px, 0.8vh, 8px);
+  width: clamp(22px, 3vh, 30px);
+  height: clamp(22px, 3vh, 30px);
+  border-radius: 50%;
+  background: #FEF08A;
+  border: 2px solid #0F172A;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.75rem, 1.4vh, 0.95rem);
+  color: #0F172A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 0 #0F172A;
+  z-index: 3;
+}
+
+/* Contenedor de la imagen de referencia (SVG) */
+.card-screen-image {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: clamp(10px, 1.4vh, 16px);
+  border: 1.5px dashed #CBD5E1;
+  background: #F8FAFC;
+  transition: transform 0.2s ease;
+  overflow: hidden;
+}
+
+.appliance-card-screen:hover .card-screen-image {
+  transform: scale(1.04);
+  background: #FFFFFF;
+}
+
+.card-screen-image svg {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Título / Nombre del artefacto en la tarjeta */
+.card-screen-title {
+  font-family: var(--font-display);
+  font-size: clamp(0.72rem, 1.35vh, 0.96rem);
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.15;
+  margin-top: clamp(4px, 0.6vh, 8px);
+  height: clamp(28px, 4.5vh, 38px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   PÁGINA COMPLETA DE DETALLE - EN UNA SOLA PANTALLA (SIN SCROLL)
+   ========================================================================== */
+.detail-view-screen {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Barra superior de navegación y retorno */
+.detail-top-nav-compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: clamp(4px, 0.8vh, 8px) clamp(8px, 1.2vw, 14px);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 2.5px solid #0F172A;
+  border-radius: clamp(12px, 1.6vh, 18px);
+  box-shadow: var(--shadow-cartoon);
+  margin-bottom: clamp(6px, 0.8vh, 10px);
+  flex-shrink: 0;
+}
+
+.btn-back-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.82rem, 1.5vh, 1.05rem);
+  background: #10B981;
+  color: #FFFFFF;
+  border: 2.5px solid #064E3B;
+  box-shadow: 0 3px 0 #064E3B;
+  padding: clamp(5px, 0.9vh, 9px) clamp(12px, 1.5vw, 20px);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.btn-back-main:hover {
+  background: #059669;
+  transform: translateY(-2px);
+}
+
+.btn-back-main:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #064E3B;
+}
+
+.detail-nav-arrows {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-nav-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.75rem, 1.35vh, 0.9rem);
+  background: #F1F5F9;
+  color: #0F172A;
+  border: 2px solid #0F172A;
+  box-shadow: 0 2px 0 #0F172A;
+  padding: clamp(4px, 0.7vh, 7px) clamp(8px, 1vw, 14px);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-nav-arrow:hover {
+  background: #E2E8F0;
+  transform: translateY(-1px);
+}
+
+.btn-nav-arrow:active {
+  transform: translateY(1px);
+}
+
+/* BANNER DE INTRODUCCIÓN GENERAL OFICIAL (REQUISITO REQUERIDO) */
+.detail-intro-ribbon {
+  background: #FEF3C7;
+  border: 2px solid #F59E0B;
+  border-radius: clamp(10px, 1.3vh, 14px);
+  padding: clamp(4px, 0.6vh, 7px) clamp(8px, 1.2vw, 14px);
+  font-size: clamp(0.7rem, 1.25vh, 0.85rem);
+  line-height: 1.25;
+  color: #78350F;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: clamp(6px, 0.8vh, 10px);
+  flex-shrink: 0;
+  box-shadow: 0 2px 0 rgba(245, 158, 11, 0.3);
+}
+
+.detail-intro-ribbon .ribbon-icon {
+  font-size: clamp(1rem, 1.8vh, 1.25rem);
+  flex-shrink: 0;
+}
+
+/* CUERPO PRINCIPAL DE DETALLE: 2 COLUMNAS SIN SCROLL */
+.detail-main-layout {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: clamp(260px, 32vw, 360px) 1fr;
+  gap: clamp(8px, 1.2vw, 14px);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* COLUMNA IZQUIERDA: HERO DEL ARTEFACTO (IMAGEN GIGANTE + POTENCIA + AUDIO) */
+.detail-left-hero {
+  background: #FFFFFF;
+  border: 3px solid #0F172A;
+  border-radius: clamp(16px, 2vh, 24px);
+  box-shadow: var(--shadow-cartoon);
+  padding: clamp(8px, 1.2vh, 14px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.detail-category-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.7rem, 1.2vh, 0.85rem);
+  padding: 3px 12px;
+  border-radius: 999px;
+  border: 2px solid #0F172A;
+  margin-bottom: 2px;
+}
+
+.detail-appliance-title {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vh, 1.4rem);
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.15;
+  margin: 2px 0 clamp(4px, 0.8vh, 8px) 0;
+}
+
+.detail-hero-svg-box {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.detail-hero-svg-box svg {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.08));
+}
+
+/* CONSUMÓMETRO COMPACTO */
+.detail-power-gauge {
+  width: 100%;
+  background: #F8FAFC;
+  border: 2px solid #CBD5E1;
+  border-radius: clamp(10px, 1.4vh, 14px);
+  padding: clamp(4px, 0.8vh, 8px) clamp(6px, 1vw, 10px);
+  margin: clamp(4px, 0.6vh, 8px) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.gauge-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: clamp(0.72rem, 1.2vh, 0.84rem);
+  font-weight: 800;
+}
+
+.gauge-watts-pill {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.78rem, 1.35vh, 0.95rem);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1.5px solid;
+}
+
+.gauge-bolts {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  font-size: clamp(1rem, 2vh, 1.4rem);
+  line-height: 1;
+}
+
+.bolt-active {
+  color: #F59E0B;
+  filter: drop-shadow(0 1px 2px #FBBF24);
+}
+
+.bolt-inactive {
+  color: #CBD5E1;
+  opacity: 0.4;
+}
+
+/* Botón de voz en la columna izquierda */
+.btn-speech-screen {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.78rem, 1.4vh, 0.95rem);
+  background: #8B5CF6;
+  color: #FFFFFF;
+  border: 2.5px solid #4C1D95;
+  box-shadow: 0 3px 0 #4C1D95;
+  padding: clamp(5px, 0.9vh, 8px) 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.btn-speech-screen:hover {
+  background: #7C3AED;
+}
+
+.btn-speech-screen:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #4C1D95;
+}
+
+.btn-speech-screen.speaking {
+  background: #EF4444;
+  border-color: #991B1B;
+  box-shadow: 0 3px 0 #991B1B;
+}
+
+/* COLUMNA DERECHA: 4 CARDS (2x2) + TIP INFANTIL INFERIOR */
+.detail-right-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 0.8vh, 10px);
+  height: 100%;
+  overflow: hidden;
+}
+
+.detail-cards-2x2 {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: clamp(6px, 0.9vh, 10px);
+  width: 100%;
+  height: 100%;
+}
+
+.compact-info-card {
+  background: #FFFFFF;
+  border: 2.5px solid #0F172A;
+  border-radius: clamp(12px, 1.6vh, 18px);
+  box-shadow: var(--shadow-cartoon);
+  padding: clamp(6px, 1vh, 10px) clamp(8px, 1vw, 12px);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.compact-card-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: clamp(3px, 0.5vh, 6px);
+  flex-shrink: 0;
+}
+
+.compact-icon-badge {
+  width: clamp(24px, 3.2vh, 32px);
+  height: clamp(24px, 3.2vh, 32px);
+  border-radius: clamp(6px, 0.8vh, 10px);
+  border: 2px solid #0F172A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.85rem, 1.6vh, 1.15rem);
+  flex-shrink: 0;
+}
+
+.compact-card-title {
+  font-family: var(--font-display);
+  font-size: clamp(0.78rem, 1.4vh, 0.98rem);
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.15;
+}
+
+.compact-card-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto; /* Permite micro-scroll interno si el texto es largo en pantallas muy bajas, sin alterar la pantalla global */
+  font-size: clamp(0.72rem, 1.25vh, 0.88rem);
+  line-height: 1.35;
+  color: #334155;
+  font-weight: 600;
+  padding-right: 2px;
+}
+
+/* Scrollbar estilizada y ultra discreta para el interior de las tarjetas */
+.compact-card-body::-webkit-scrollbar {
+  width: 4px;
+}
+.compact-card-body::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 4px;
+}
+.compact-card-body::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+.compact-card-body strong {
+  color: #0F172A;
+  font-weight: 800;
+}
+
+/* Lista de recomendaciones compacta */
+.compact-recom-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.compact-recom-list li {
+  position: relative;
+  padding-left: 18px;
+  line-height: 1.3;
+}
+
+.compact-recom-list li::before {
+  content: "⭐";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 0.75rem;
+}
+
+/* BANNER INFERIOR: TIP INFANTIL HERO */
+.compact-kids-tip {
+  background: #ECFDF5;
+  border: 2px solid #10B981;
+  border-radius: clamp(10px, 1.4vh, 14px);
+  padding: clamp(4px, 0.7vh, 8px) clamp(8px, 1.2vw, 14px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 0 rgba(16, 185, 129, 0.25);
+}
+
+.compact-kids-tip .tip-hero-icon {
+  font-size: clamp(1.1rem, 2vh, 1.5rem);
+  flex-shrink: 0;
+}
+
+.compact-kids-tip-text {
+  font-size: clamp(0.72rem, 1.25vh, 0.88rem);
+  line-height: 1.25;
+  color: #047857;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   VISTA DEL CONSUMO VAMPIRO EN UNA SOLA PANTALLA
+   ========================================================================== */
+.vampire-single-screen {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.vampire-layout-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: clamp(260px, 32vw, 360px) 1fr;
+  gap: clamp(8px, 1.2vw, 14px);
+  width: 100%;
+  height: 100%;
+}
+
+.vampire-left-card {
+  background: #EEF2FF;
+  border: 3px solid #4338CA;
+  border-radius: clamp(16px, 2vh, 24px);
+  box-shadow: var(--shadow-cartoon);
+  padding: clamp(8px, 1.2vh, 14px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  height: 100%;
+  min-height: 0;
+}
+
+/* ==========================================================================
+   RESPONSIVIDAD Y BREAKPOINTS ADAPTATIVOS
+   ========================================================================== */
+
+/* PANTALLAS MÓVILES (FORMATO VERTICAL / PORTRAIT) */
+@media (max-width: 680px) {
+  /* En la pantalla principal móvil: 2 columnas x 5 filas para que quepan las 10 sin scroll */
+  .appliances-grid-screen {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 6px;
+  }
+  
+  .appliance-card-screen {
+    padding: 4px 6px;
+  }
+  
+  .card-screen-title {
+    font-size: 0.72rem;
+    height: 24px;
+    margin-top: 2px;
+  }
+  
+  /* En la pantalla de detalle móvil: layout apilado optimizado */
+  .detail-main-layout, .vampire-layout-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 6px;
+  }
+  
+  .detail-left-hero, .vampire-left-card {
+    flex-direction: row;
+    height: auto;
+    padding: 6px 10px;
+    gap: 8px;
+  }
+  
+  .detail-hero-svg-box {
+    width: 60px;
+    height: 60px;
+    flex: none;
+  }
+  
+  .detail-power-gauge {
+    margin: 0;
+    padding: 2px 6px;
+  }
+  
+  .detail-cards-2x2 {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
+}
+
+/* PANTALLAS CON ALTURA MUY REDUCIDA (LAPTOPS PEQUEÑAS O LANDSCAPE) */
+@media (max-height: 600px) {
+  #app-container {
+    padding: 4px 8px;
+  }
+  .main-header-compact {
+    margin-bottom: 4px;
+    padding: 2px 8px;
+  }
+  .detail-intro-ribbon {
+    display: none; /* Oculta el ribbon largo para priorizar contenido y evitar scroll */
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
